@@ -11,6 +11,9 @@ import Profile from "./pages/Profile";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Categories from "./pages/Categories";
+import CategoryDetail from "./pages/CategoryDetail";
+import Newsletter from "./pages/Newsletter";
+import WriteForUs from "./pages/WriteForUs";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,7 +33,9 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/categories" element={<Categories />} />
-            <Route path="/category/:slug" element={<Categories />} />
+            <Route path="/category/:slug" element={<CategoryDetail />} />
+            <Route path="/newsletter" element={<Newsletter />} />
+            <Route path="/write-for-us" element={<WriteForUs />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

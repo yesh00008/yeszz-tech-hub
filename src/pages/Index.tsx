@@ -6,12 +6,17 @@ import PostCard from "@/components/PostCard";
 import CategoriesSection from "@/components/CategoriesSection";
 import TrendingSection from "@/components/TrendingSection";
 import SearchOverlay from "@/components/SearchOverlay";
+import StatsTicker from "@/components/StatsTicker";
+import NewsletterBanner from "@/components/NewsletterBanner";
+import WriteForUsBanner from "@/components/WriteForUsBanner";
+import BackToTop from "@/components/BackToTop";
 import Footer from "@/components/Footer";
 
 const Index = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [posts, setPosts] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +26,7 @@ const Index = () => {
       ]);
       if (postsRes.data) setPosts(postsRes.data);
       if (catsRes.data) setCategories(catsRes.data);
+      setLoading(false);
     };
     fetchData();
   }, []);
@@ -39,6 +45,9 @@ const Index = () => {
     return () => window.removeEventListener("keydown", handler);
   }, []);
 
+  const featured = posts.filter((p) => p.featured);
+  const latest = posts.slice(0, 9);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar onSearchOpen={handleSearchOpen} />
@@ -46,15 +55,30 @@ const Index = () => {
 
       <main>
         <HeroSection />
+        <StatsTicker />
         <TrendingSection posts={posts} />
         <CategoriesSection categories={categories} />
 
         <section id="latest" className="py-16 border-t border-border">
           <div className="container">
             <h2 className="text-2xl font-bold mb-8">Latest Articles</h2>
-            {posts.length > 0 ? (
+            {loading ? (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {posts.map((post, i) => (
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <div key={i} className="rounded-xl border border-border bg-card overflow-hidden animate-pulse">
+                    <div className="aspect-[16/10] bg-secondary" />
+                    <div className="p-5 space-y-3">
+                      <div className="h-4 bg-secondary rounded w-16" />
+                      <div className="h-5 bg-secondary rounded w-3/4" />
+                      <div className="h-3 bg-secondary rounded w-full" />
+                      <div className="h-3 bg-secondary rounded w-1/3" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : latest.length > 0 ? (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {latest.map((post, i) => (
                   <PostCard
                     key={post.id}
                     post={{
@@ -70,7 +94,7 @@ const Index = () => {
                       featured: post.featured,
                     }}
                     index={i}
-                    featured={i === 0}
+                    featured={i === 0 && post.featured}
                   />
                 ))}
               </div>
@@ -82,9 +106,42 @@ const Index = () => {
             )}
           </div>
         </section>
+
+        {/* Featured Section */}
+        {featured.length > 1 && (
+          <section className="py-16 border-t border-border">
+            <div className="container">
+              <h2 className="text-2xl font-bold mb-8">Featured</h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                {featured.slice(0, 2).map((post, i) => (
+                  <PostCard
+                    key={post.id}
+                    post={{
+                      id: post.id,
+                      title: post.title,
+                      summary: post.summary || "",
+                      category: post.categories?.name || "General",
+                      image: post.image_url || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+                      date: new Date(post.published_at || post.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+                      readTime: post.read_time || "5 min",
+                      author: "Yeszz Team",
+                      slug: post.slug,
+                      featured: true,
+                    }}
+                    index={i}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        <NewsletterBanner />
+        <WriteForUsBanner />
       </main>
 
       <Footer />
+      <BackToTop />
     </div>
   );
 };

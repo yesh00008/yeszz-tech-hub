@@ -1,11 +1,13 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Clock, Calendar, Copy, Check } from "lucide-react";
+import { ArrowLeft, Clock, Calendar, Copy, Check, Share2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SearchOverlay from "@/components/SearchOverlay";
+import ReadingProgress from "@/components/ReadingProgress";
+import BackToTop from "@/components/BackToTop";
 import PostCard from "@/components/PostCard";
 
 const BlogPost = () => {
@@ -18,6 +20,7 @@ const BlogPost = () => {
 
   useEffect(() => {
     const fetchPost = async () => {
+      setLoading(true);
       const { data } = await supabase
         .from("posts")
         .select("*, categories(name, slug, icon)")
@@ -27,7 +30,6 @@ const BlogPost = () => {
 
       if (data) {
         setPost(data);
-        // Fetch related
         const { data: rel } = await supabase
           .from("posts")
           .select("*, categories(name, slug, icon)")
@@ -66,7 +68,13 @@ const BlogPost = () => {
             <div className="h-4 bg-secondary rounded w-20" />
             <div className="h-10 bg-secondary rounded w-3/4" />
             <div className="h-6 bg-secondary rounded w-1/2" />
-            <div className="h-64 bg-secondary rounded-xl" />
+            <div className="h-4 bg-secondary rounded w-1/3" />
+            <div className="h-64 bg-secondary rounded-xl mt-8" />
+            <div className="space-y-3 mt-8">
+              <div className="h-4 bg-secondary rounded" />
+              <div className="h-4 bg-secondary rounded w-5/6" />
+              <div className="h-4 bg-secondary rounded w-4/6" />
+            </div>
           </div>
         </div>
       </div>
@@ -76,10 +84,13 @@ const BlogPost = () => {
   if (!post) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Post Not Found</h1>
-          <Link to="/" className="text-primary hover:underline">← Back to Home</Link>
-        </div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
+          <div className="text-6xl font-black text-gradient mb-4">404</div>
+          <h1 className="text-2xl font-bold mb-3">Post Not Found</h1>
+          <Link to="/" className="text-primary hover:underline inline-flex items-center gap-2">
+            <ArrowLeft className="h-4 w-4" /> Back to Home
+          </Link>
+        </motion.div>
       </div>
     );
   }
@@ -88,6 +99,7 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <ReadingProgress />
       <Navbar onSearchOpen={() => setSearchOpen(true)} />
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
 
@@ -118,23 +130,45 @@ const BlogPost = () => {
                   {post.read_time || "5 min"}
                 </span>
               </div>
-              <button
-                onClick={handleCopyLink}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-all"
-              >
-                {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-                {copied ? "Copied!" : "Copy link"}
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleCopyLink}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-all"
+                >
+                  {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                  {copied ? "Copied!" : "Copy link"}
+                </button>
+                <a
+                  href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg border border-border hover:bg-secondary transition-colors"
+                  aria-label="Share on Twitter"
+                >
+                  <Share2 className="h-4 w-4 text-muted-foreground" />
+                </a>
+              </div>
             </div>
 
             {post.image_url && (
-              <div className="rounded-xl overflow-hidden mb-10">
-                <img src={post.image_url} alt={post.title} className="w-full aspect-[2/1] object-cover" />
-              </div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+                className="rounded-xl overflow-hidden mb-10"
+              >
+                <img src={post.image_url} alt={post.title} className="w-full aspect-[2/1] object-cover" loading="lazy" />
+              </motion.div>
             )}
 
             {post.content && (
-              <div className="prose-custom" dangerouslySetInnerHTML={{ __html: post.content }} />
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                className="prose-custom"
+                dangerouslySetInnerHTML={{ __html: post.content }}
+              />
             )}
           </motion.div>
         </div>
@@ -168,6 +202,7 @@ const BlogPost = () => {
       )}
 
       <Footer />
+      <BackToTop />
     </div>
   );
 };
