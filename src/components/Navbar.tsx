@@ -9,8 +9,8 @@ import logo from "@/assets/logo.png";
 
 const navLinks = [
   { label: "Home", to: "/" },
-  { label: "Sponsorship", to: "/sponsorship" },
   { label: "About", to: "/about" },
+  { label: "Careers", to: "/careers" },
   { label: "Contact", to: "/contact" },
 ];
 
