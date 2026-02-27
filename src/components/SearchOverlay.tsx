@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Search, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { posts } from "@/data/posts";
+import { supabase } from "@/integrations/supabase/client";
 
 interface SearchOverlayProps {
   open: boolean;
@@ -11,33 +11,36 @@ interface SearchOverlayProps {
 
 const SearchOverlay = ({ open, onClose }: SearchOverlayProps) => {
   const [query, setQuery] = useState("");
+  const [results, setResults] = useState<any[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const filtered = query.trim()
-    ? posts.filter(
-        (p) =>
-          p.title.toLowerCase().includes(query.toLowerCase()) ||
-          p.summary.toLowerCase().includes(query.toLowerCase()) ||
-          p.category.toLowerCase().includes(query.toLowerCase())
-      )
-    : [];
 
   useEffect(() => {
     if (open) {
       setTimeout(() => inputRef.current?.focus(), 100);
       setQuery("");
+      setResults([]);
     }
   }, [open]);
 
   useEffect(() => {
+    if (!query.trim()) {
+      setResults([]);
+      return;
+    }
+    const timer = setTimeout(async () => {
+      const { data } = await supabase
+        .from("posts")
+        .select("id, title, slug, summary, image_url, read_time, categories(name)")
+        .eq("published", true)
+        .or(`title.ilike.%${query}%,summary.ilike.%${query}%`)
+        .limit(6);
+      if (data) setResults(data);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
-        if (open) onClose();
-        else {
-          // parent handles opening
-        }
-      }
       if (e.key === "Escape" && open) onClose();
     };
     window.addEventListener("keydown", handler);
@@ -76,20 +79,22 @@ const SearchOverlay = ({ open, onClose }: SearchOverlayProps) => {
 
             {query.trim() && (
               <div className="max-h-80 overflow-y-auto p-2">
-                {filtered.length === 0 ? (
+                {results.length === 0 ? (
                   <p className="px-3 py-8 text-center text-sm text-muted-foreground">No results found</p>
                 ) : (
-                  filtered.map((post) => (
+                  results.map((post) => (
                     <Link
                       key={post.id}
                       to={`/post/${post.slug}`}
                       onClick={onClose}
                       className="flex items-start gap-3 rounded-lg p-3 hover:bg-secondary transition-colors"
                     >
-                      <img src={post.image} alt="" className="w-12 h-12 rounded-lg object-cover flex-shrink-0" />
+                      {post.image_url && (
+                        <img src={post.image_url} alt="" className="w-12 h-12 rounded-lg object-cover flex-shrink-0" />
+                      )}
                       <div className="min-w-0">
                         <h4 className="text-sm font-semibold line-clamp-2">{post.title}</h4>
-                        <span className="text-xs text-muted-foreground">{post.category} · {post.readTime}</span>
+                        <span className="text-xs text-muted-foreground">{post.categories?.name || "General"} · {post.read_time || "5 min"}</span>
                       </div>
                     </Link>
                   ))
