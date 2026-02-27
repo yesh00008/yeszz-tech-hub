@@ -20,7 +20,9 @@ import CreatorServices from "./pages/CreatorServices";
 import CreatorProfile from "./pages/CreatorProfile";
 import Bookmarks from "./pages/Bookmarks";
 import TagPage from "./pages/TagPage";
-import Sponsorship from "./pages/Sponsorship";
+import Careers from "./pages/Careers";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -50,7 +52,9 @@ const App = () => (
             <Route path="/creator/:userId" element={<CreatorProfile />} />
             <Route path="/bookmarks" element={<Bookmarks />} />
             <Route path="/tag/:slug" element={<TagPage />} />
-            <Route path="/sponsorship" element={<Sponsorship />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
