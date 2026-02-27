@@ -9,6 +9,9 @@ import SearchOverlay from "@/components/SearchOverlay";
 import ReadingProgress from "@/components/ReadingProgress";
 import BackToTop from "@/components/BackToTop";
 import PostCard from "@/components/PostCard";
+import PostReactions from "@/components/PostReactions";
+import CommentsSection from "@/components/CommentsSection";
+import FollowButton from "@/components/FollowButton";
 
 const BlogPost = () => {
   const { slug } = useParams();
@@ -170,6 +173,20 @@ const BlogPost = () => {
                 dangerouslySetInnerHTML={{ __html: post.content }}
               />
             )}
+
+            {/* Reactions & Bookmark */}
+            <div className="mt-10 pt-8 border-t border-border flex items-center justify-between flex-wrap gap-4">
+              <PostReactions
+                postId={post.id}
+                onCommentClick={() => document.getElementById("comments")?.scrollIntoView({ behavior: "smooth" })}
+              />
+              {post.author_id && (
+                <FollowButton authorId={post.author_id} />
+              )}
+            </div>
+
+            {/* Comments */}
+            <CommentsSection postId={post.id} />
           </motion.div>
         </div>
       </article>
