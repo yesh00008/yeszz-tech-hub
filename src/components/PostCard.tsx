@@ -1,7 +1,19 @@
 import { Link } from "react-router-dom";
 import { Clock } from "lucide-react";
 import { motion } from "framer-motion";
-import type { Post } from "@/data/posts";
+
+export interface PostCardData {
+  id: string;
+  title: string;
+  summary: string;
+  category: string;
+  image: string;
+  date: string;
+  readTime: string;
+  author: string;
+  slug: string;
+  featured?: boolean;
+}
 
 const categoryColors: Record<string, string> = {
   AI: "bg-primary/10 text-primary",
@@ -13,7 +25,7 @@ const categoryColors: Record<string, string> = {
 };
 
 interface PostCardProps {
-  post: Post;
+  post: PostCardData;
   index?: number;
   featured?: boolean;
 }

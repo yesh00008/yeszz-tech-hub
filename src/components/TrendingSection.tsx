@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
 import { TrendingUp, Clock } from "lucide-react";
 import { motion } from "framer-motion";
-import { posts } from "@/data/posts";
 
-const TrendingSection = () => {
+interface TrendingSectionProps {
+  posts: any[];
+}
+
+const TrendingSection = ({ posts }: TrendingSectionProps) => {
   const trending = posts.filter((p) => p.trending).slice(0, 4);
+
+  if (trending.length === 0) return null;
 
   return (
     <section className="py-16 border-t border-border">
@@ -34,11 +39,11 @@ const TrendingSection = () => {
                     {post.title}
                   </h3>
                   <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
-                    <span>{post.category}</span>
+                    <span>{post.categories?.name || "General"}</span>
                     <span className="w-1 h-1 rounded-full bg-border" />
                     <span className="inline-flex items-center gap-1">
                       <Clock className="h-3 w-3" />
-                      {post.readTime}
+                      {post.read_time || "5 min"}
                     </span>
                   </div>
                 </div>

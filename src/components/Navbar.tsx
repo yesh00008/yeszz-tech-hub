@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Search, Menu, X } from "lucide-react";
+import { Search, Menu, X, User, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContext";
 
 const navLinks = [
   { label: "Home", to: "/" },
@@ -17,13 +18,14 @@ interface NavbarProps {
 
 const Navbar = ({ onSearchOpen }: NavbarProps) => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/80 backdrop-blur-xl">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <span className="text-2xl font-black tracking-tighter text-gradient">Yeszz</span>
-          <span className="hidden sm:inline text-xs font-medium text-muted-foreground border border-border rounded-full px-2 py-0.5">TECH</span>
+          <span className="hidden sm:inline text-[10px] font-bold uppercase tracking-widest text-muted-foreground border border-border rounded-full px-2 py-0.5">Tech</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
@@ -31,9 +33,9 @@ const Navbar = ({ onSearchOpen }: NavbarProps) => {
             <Link
               key={link.label}
               to={link.to}
-              className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-secondary"
+              className="story-link px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-secondary"
             >
-              {link.label}
+              <span>{link.label}</span>
             </Link>
           ))}
         </nav>
@@ -47,6 +49,31 @@ const Navbar = ({ onSearchOpen }: NavbarProps) => {
             <span className="hidden sm:inline">Search...</span>
             <kbd className="hidden sm:inline-flex items-center rounded border border-border bg-card px-1.5 text-[10px] font-mono">⌘K</kbd>
           </button>
+
+          {user ? (
+            <div className="hidden sm:flex items-center gap-1">
+              <Link
+                to="/profile"
+                className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-all"
+              >
+                <User className="h-4 w-4" />
+                Profile
+              </Link>
+              <button
+                onClick={() => signOut()}
+                className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-muted-foreground hover:text-destructive hover:bg-destructive/5 transition-all"
+              >
+                <LogOut className="h-4 w-4" />
+              </button>
+            </div>
+          ) : (
+            <Link
+              to="/auth"
+              className="hidden sm:inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground shadow-primary hover:brightness-110 transition-all"
+            >
+              Sign In
+            </Link>
+          )}
 
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -76,6 +103,14 @@ const Navbar = ({ onSearchOpen }: NavbarProps) => {
                   {link.label}
                 </Link>
               ))}
+              {user ? (
+                <>
+                  <Link to="/profile" onClick={() => setMobileOpen(false)} className="px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground rounded-lg hover:bg-secondary transition-colors">Profile</Link>
+                  <button onClick={() => { signOut(); setMobileOpen(false); }} className="text-left px-3 py-2.5 text-sm font-medium text-destructive hover:bg-destructive/5 rounded-lg transition-colors">Sign Out</button>
+                </>
+              ) : (
+                <Link to="/auth" onClick={() => setMobileOpen(false)} className="px-3 py-2.5 text-sm font-semibold text-primary">Sign In</Link>
+              )}
             </nav>
           </motion.div>
         )}
