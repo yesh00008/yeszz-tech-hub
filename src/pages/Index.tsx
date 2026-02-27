@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -13,6 +14,15 @@ import NewsletterBanner from "@/components/NewsletterBanner";
 import WriteForUsBanner from "@/components/WriteForUsBanner";
 import BackToTop from "@/components/BackToTop";
 import Footer from "@/components/Footer";
+
+const container = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
+};
+const item = {
+  hidden: { opacity: 0, y: 20, scale: 0.97 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4 } },
+};
 
 const Index = () => {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -57,14 +67,53 @@ const Index = () => {
 
       <main>
         <HeroSection />
-        <StatsTicker />
-        <TrendingSection posts={posts} />
-        <CategoriesSection categories={categories} />
-        <PopularThisWeek />
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <StatsTicker />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <TrendingSection posts={posts} />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <CategoriesSection categories={categories} />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <PopularThisWeek />
+        </motion.div>
 
         <section id="latest" className="py-16 border-t border-border">
           <div className="container">
-            <h2 className="text-2xl font-bold mb-8">Latest Articles</h2>
+            <motion.h2
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="text-2xl font-bold mb-8"
+            >
+              Latest Articles
+            </motion.h2>
             {loading ? (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -80,32 +129,43 @@ const Index = () => {
                 ))}
               </div>
             ) : latest.length > 0 ? (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <motion.div
+                variants={container}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+              >
                 {latest.map((post, i) => (
-                  <PostCard
-                    key={post.id}
-                    post={{
-                      id: post.id,
-                      title: post.title,
-                      summary: post.summary || "",
-                      category: post.categories?.name || "General",
-                      image: post.image_url || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
-                      date: new Date(post.published_at || post.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
-                      readTime: post.read_time || "5 min",
-                      author: "Yeszz Team",
-                      slug: post.slug,
-                      featured: post.featured,
-                    }}
-                    index={i}
-                    featured={i === 0 && post.featured}
-                  />
+                  <motion.div key={post.id} variants={item}>
+                    <PostCard
+                      post={{
+                        id: post.id,
+                        title: post.title,
+                        summary: post.summary || "",
+                        category: post.categories?.name || "General",
+                        image: post.image_url || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+                        date: new Date(post.published_at || post.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+                        readTime: post.read_time || "5 min",
+                        author: "Yeszz Team",
+                        slug: post.slug,
+                        featured: post.featured,
+                      }}
+                      index={i}
+                      featured={i === 0 && post.featured}
+                    />
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             ) : (
-              <div className="text-center py-20">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center py-20"
+              >
                 <p className="text-muted-foreground text-lg mb-2">No articles yet</p>
                 <p className="text-sm text-muted-foreground">Articles will appear here once published.</p>
-              </div>
+              </motion.div>
             )}
           </div>
         </section>
@@ -113,34 +173,71 @@ const Index = () => {
         {featured.length > 1 && (
           <section className="py-16 border-t border-border">
             <div className="container">
-              <h2 className="text-2xl font-bold mb-8">Featured</h2>
-              <div className="grid md:grid-cols-2 gap-6">
+              <motion.h2
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="text-2xl font-bold mb-8"
+              >
+                Featured
+              </motion.h2>
+              <motion.div
+                variants={container}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                className="grid md:grid-cols-2 gap-6"
+              >
                 {featured.slice(0, 2).map((post, i) => (
-                  <PostCard
-                    key={post.id}
-                    post={{
-                      id: post.id,
-                      title: post.title,
-                      summary: post.summary || "",
-                      category: post.categories?.name || "General",
-                      image: post.image_url || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
-                      date: new Date(post.published_at || post.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
-                      readTime: post.read_time || "5 min",
-                      author: "Yeszz Team",
-                      slug: post.slug,
-                      featured: true,
-                    }}
-                    index={i}
-                  />
+                  <motion.div key={post.id} variants={item}>
+                    <PostCard
+                      post={{
+                        id: post.id,
+                        title: post.title,
+                        summary: post.summary || "",
+                        category: post.categories?.name || "General",
+                        image: post.image_url || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+                        date: new Date(post.published_at || post.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+                        readTime: post.read_time || "5 min",
+                        author: "Yeszz Team",
+                        slug: post.slug,
+                        featured: true,
+                      }}
+                      index={i}
+                    />
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </div>
           </section>
         )}
 
-        <AuthorSpotlight />
-        <NewsletterBanner />
-        <WriteForUsBanner />
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <AuthorSpotlight />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <NewsletterBanner />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <WriteForUsBanner />
+        </motion.div>
       </main>
 
       <Footer />
