@@ -14,6 +14,10 @@ import Categories from "./pages/Categories";
 import CategoryDetail from "./pages/CategoryDetail";
 import Newsletter from "./pages/Newsletter";
 import WriteForUs from "./pages/WriteForUs";
+import WriteEditor from "./pages/WriteEditor";
+import CreatorDashboard from "./pages/CreatorDashboard";
+import CreatorServices from "./pages/CreatorServices";
+import CreatorProfile from "./pages/CreatorProfile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +40,11 @@ const App = () => (
             <Route path="/category/:slug" element={<CategoryDetail />} />
             <Route path="/newsletter" element={<Newsletter />} />
             <Route path="/write-for-us" element={<WriteForUs />} />
+            <Route path="/creator/services" element={<CreatorServices />} />
+            <Route path="/creator/dashboard" element={<CreatorDashboard />} />
+            <Route path="/creator/write" element={<WriteEditor />} />
+            <Route path="/creator/write/:id" element={<WriteEditor />} />
+            <Route path="/creator/:userId" element={<CreatorProfile />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

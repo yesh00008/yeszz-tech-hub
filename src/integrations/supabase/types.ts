@@ -76,6 +76,33 @@ export type Database = {
           },
         ]
       }
+      creator_tips: {
+        Row: {
+          amount: number
+          created_at: string
+          creator_id: string
+          id: string
+          message: string | null
+          tipper_id: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          creator_id: string
+          id?: string
+          message?: string | null
+          tipper_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          creator_id?: string
+          id?: string
+          message?: string | null
+          tipper_id?: string
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           email: string
@@ -94,6 +121,39 @@ export type Database = {
         }
         Relationships: []
       }
+      post_tags: {
+        Row: {
+          id: string
+          post_id: string
+          tag_id: string
+        }
+        Insert: {
+          id?: string
+          post_id: string
+          tag_id: string
+        }
+        Update: {
+          id?: string
+          post_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_tags_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "post_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       posts: {
         Row: {
           author_id: string | null
@@ -103,10 +163,13 @@ export type Database = {
           featured: boolean
           id: string
           image_url: string | null
+          meta_description: string | null
+          meta_keywords: string | null
           published: boolean
           published_at: string | null
           read_time: string | null
           slug: string
+          status: string
           summary: string | null
           title: string
           trending: boolean
@@ -121,10 +184,13 @@ export type Database = {
           featured?: boolean
           id?: string
           image_url?: string | null
+          meta_description?: string | null
+          meta_keywords?: string | null
           published?: boolean
           published_at?: string | null
           read_time?: string | null
           slug: string
+          status?: string
           summary?: string | null
           title: string
           trending?: boolean
@@ -139,10 +205,13 @@ export type Database = {
           featured?: boolean
           id?: string
           image_url?: string | null
+          meta_description?: string | null
+          meta_keywords?: string | null
           published?: boolean
           published_at?: string | null
           read_time?: string | null
           slug?: string
+          status?: string
           summary?: string | null
           title?: string
           trending?: boolean
@@ -189,6 +258,27 @@ export type Database = {
           updated_at?: string
           user_id?: string
           website?: string | null
+        }
+        Relationships: []
+      }
+      tags: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          slug?: string
         }
         Relationships: []
       }
