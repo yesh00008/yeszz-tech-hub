@@ -19,6 +19,7 @@ import CreatorDashboard from "./pages/CreatorDashboard";
 import CreatorServices from "./pages/CreatorServices";
 import CreatorProfile from "./pages/CreatorProfile";
 import Bookmarks from "./pages/Bookmarks";
+import TagPage from "./pages/TagPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -47,6 +48,7 @@ const App = () => (
             <Route path="/creator/write/:id" element={<WriteEditor />} />
             <Route path="/creator/:userId" element={<CreatorProfile />} />
             <Route path="/bookmarks" element={<Bookmarks />} />
+            <Route path="/tag/:slug" element={<TagPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

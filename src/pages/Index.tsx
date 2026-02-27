@@ -5,6 +5,8 @@ import HeroSection from "@/components/HeroSection";
 import PostCard from "@/components/PostCard";
 import CategoriesSection from "@/components/CategoriesSection";
 import TrendingSection from "@/components/TrendingSection";
+import PopularThisWeek from "@/components/PopularThisWeek";
+import AuthorSpotlight from "@/components/AuthorSpotlight";
 import SearchOverlay from "@/components/SearchOverlay";
 import StatsTicker from "@/components/StatsTicker";
 import NewsletterBanner from "@/components/NewsletterBanner";
@@ -58,6 +60,7 @@ const Index = () => {
         <StatsTicker />
         <TrendingSection posts={posts} />
         <CategoriesSection categories={categories} />
+        <PopularThisWeek />
 
         <section id="latest" className="py-16 border-t border-border">
           <div className="container">
@@ -107,7 +110,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Featured Section */}
         {featured.length > 1 && (
           <section className="py-16 border-t border-border">
             <div className="container">
@@ -136,6 +138,7 @@ const Index = () => {
           </section>
         )}
 
+        <AuthorSpotlight />
         <NewsletterBanner />
         <WriteForUsBanner />
       </main>
