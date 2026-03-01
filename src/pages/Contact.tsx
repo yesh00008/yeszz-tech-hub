@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Mail, Send, MapPin, Phone } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SearchOverlay from "@/components/SearchOverlay";
+import SmartSearch from "@/components/SmartSearch";
 import { toast } from "sonner";
 
 const Contact = () => {
@@ -28,7 +28,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen">
       <Navbar onSearchOpen={() => setSearchOpen(true)} />
-      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <SmartSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
 
       <main className="py-16">
         <div className="container max-w-5xl">
