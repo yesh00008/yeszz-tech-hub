@@ -81,19 +81,15 @@ const About = () => {
 
       <main>
         {/* Hero */}
-        <section className="bg-hero text-primary-foreground py-20 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-[0.03]" style={{
-            backgroundImage: "linear-gradient(hsl(151 72% 40%) 1px, transparent 1px), linear-gradient(90deg, hsl(151 72% 40%) 1px, transparent 1px)",
-            backgroundSize: "60px 60px"
-          }} />
+        <section className="py-20 relative overflow-hidden">
           <div className="container relative">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
               <div className="flex items-center gap-2 mb-4">
                 <MapPin className="h-5 w-5 text-primary" />
-                <span className="text-sm font-medium opacity-70">Based in India 🇮🇳</span>
+                <span className="text-sm font-medium text-muted-foreground">Based in India 🇮🇳</span>
               </div>
               <h1 className="text-4xl sm:text-5xl font-black leading-tight mb-4">About <span className="text-gradient">Yeszz</span></h1>
-              <p className="text-lg opacity-70 max-w-xl leading-relaxed">
+              <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
                 We're a team of passionate Indian technologists, developers, and writers on a mission to make technology accessible, understandable, and exciting for everyone — from Bangalore to the world.
               </p>
             </motion.div>
@@ -114,12 +110,12 @@ const About = () => {
         </section>
 
         {/* Values */}
-        <section className="py-16 border-t border-border">
+        <section className="py-16">
           <div className="container">
             <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-2xl font-bold mb-8 text-center">What We Stand For</motion.h2>
-            <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {values.map((v) => (
-                <motion.div key={v.title} variants={item} className="rounded-xl border border-border bg-card p-6 shadow-card hover:shadow-card-hover hover:border-primary/30 transition-all duration-300 group">
+                <motion.div key={v.title} variants={item} className="p-6 group">
                   <v.icon className="h-6 w-6 text-primary mb-3 group-hover:scale-110 transition-transform" />
                   <h3 className="font-semibold mb-1">{v.title}</h3>
                   <p className="text-sm text-muted-foreground">{v.desc}</p>
@@ -130,7 +126,7 @@ const About = () => {
         </section>
 
         {/* Stats */}
-        <section className="py-16 border-t border-border">
+        <section className="py-16">
           <div className="container">
             <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               {[
@@ -139,7 +135,7 @@ const About = () => {
                 { num: "50+", label: "Contributors" },
                 { num: "16", label: "Categories" },
               ].map((s) => (
-                <div key={s.label} className="rounded-xl border border-border bg-card p-6 shadow-card">
+                <div key={s.label} className="p-6">
                   <div className="text-3xl font-black text-gradient mb-1">{s.num}</div>
                   <div className="text-sm text-muted-foreground">{s.label}</div>
                 </div>
@@ -148,16 +144,16 @@ const About = () => {
           </div>
         </section>
 
-        {/* Creator Services Section */}
-        <section className="py-16 border-t border-border">
+        {/* Creator Services */}
+        <section className="py-16">
           <div className="container">
             <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
               <h2 className="text-3xl font-black mb-3">Creator Services</h2>
-              <p className="text-muted-foreground max-w-lg mx-auto">Join our creator program to write, earn, and grow your audience. Everything you need to succeed as a tech content creator.</p>
+              <p className="text-muted-foreground max-w-lg mx-auto">Join our creator program to write, earn, and grow your audience.</p>
             </motion.div>
-            <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               {creatorFeatures.map((f) => (
-                <motion.div key={f.title} variants={item} className="rounded-xl border border-border bg-card p-6 shadow-card hover:shadow-card-hover hover:border-primary/30 transition-all duration-300 group text-center">
+                <motion.div key={f.title} variants={item} className="p-6 group text-center">
                   <div className="w-12 h-12 mx-auto rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                     <f.icon className="h-6 w-6 text-primary" />
                   </div>
@@ -174,8 +170,8 @@ const About = () => {
           </div>
         </section>
 
-        {/* ===== SPONSORSHIP SECTION (merged) ===== */}
-        <section id="sponsorship" className="py-20 border-t border-border">
+        {/* Sponsorship */}
+        <section id="sponsorship" className="py-20">
           <div className="container">
             <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
               <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary mb-4">
@@ -183,13 +179,12 @@ const About = () => {
                 Brand Partnerships
               </motion.div>
               <h2 className="text-3xl font-black mb-3">Amplify Your Brand with Creator Sponsorships</h2>
-              <p className="text-muted-foreground max-w-xl mx-auto">Partner with Yeszz's network of Indian tech influencers on Instagram, YouTube, and beyond. Reach millions of engaged tech enthusiasts authentically.</p>
+              <p className="text-muted-foreground max-w-xl mx-auto">Partner with Yeszz's network of Indian tech influencers.</p>
             </motion.div>
 
-            {/* Insights */}
-            <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+            <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
               {insights.map((stat) => (
-                <motion.div key={stat.label} variants={item} className="rounded-xl border border-border bg-card p-6 shadow-card hover:shadow-card-hover transition-all text-center group">
+                <motion.div key={stat.label} variants={item} className="p-6 text-center group">
                   <stat.icon className="h-5 w-5 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
                   <div className="text-3xl font-black text-gradient mb-1">{stat.value}</div>
                   <div className="text-sm font-semibold mb-0.5">{stat.label}</div>
@@ -198,14 +193,13 @@ const About = () => {
               ))}
             </motion.div>
 
-            {/* Platforms */}
             <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-8">
               <h3 className="text-2xl font-black mb-2">Multi-Platform Sponsorships</h3>
               <p className="text-muted-foreground">Reach your target audience wherever they consume tech content</p>
             </motion.div>
             <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid md:grid-cols-3 gap-6 mb-16">
               {platforms.map((platform) => (
-                <motion.div key={platform.name} variants={item} whileHover={{ y: -4 }} className="rounded-2xl border border-border bg-card p-8 shadow-card hover:shadow-card-hover transition-all group">
+                <motion.div key={platform.name} variants={item} whileHover={{ y: -4 }} className="p-8 group">
                   <div className={`w-14 h-14 rounded-2xl ${platform.bgColor} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
                     <platform.icon className={`h-7 w-7 ${platform.textColor}`} />
                   </div>
@@ -222,15 +216,12 @@ const About = () => {
               ))}
             </motion.div>
 
-            {/* How It Works */}
             <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-8">
               <h3 className="text-2xl font-black mb-2">How It Works</h3>
-              <p className="text-muted-foreground">From brand match to campaign delivery in four simple steps</p>
             </motion.div>
             <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-              {howItWorks.map((step, i) => (
+              {howItWorks.map((step) => (
                 <motion.div key={step.step} variants={item} className="text-center relative">
-                  {i < howItWorks.length - 1 && <div className="hidden lg:block absolute top-10 left-[60%] w-[80%] h-px bg-border" />}
                   <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-5 relative">
                     <step.icon className="h-7 w-7 text-primary" />
                     <span className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center">{step.step}</span>
@@ -241,13 +232,12 @@ const About = () => {
               ))}
             </motion.div>
 
-            {/* Benefits */}
             <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-8">
               <h3 className="text-2xl font-black mb-2">Why Partner with Yeszz?</h3>
             </motion.div>
-            <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid sm:grid-cols-2 gap-5 max-w-3xl mx-auto mb-8">
+            <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto mb-8">
               {benefits.map((b) => (
-                <motion.div key={b.title} variants={item} whileHover={{ scale: 1.02 }} className="rounded-xl border border-border bg-card p-6 shadow-card hover:shadow-card-hover hover:border-primary/30 transition-all group">
+                <motion.div key={b.title} variants={item} whileHover={{ scale: 1.02 }} className="p-6 group">
                   <b.icon className="h-6 w-6 text-primary mb-3 group-hover:scale-110 transition-transform" />
                   <h4 className="font-bold mb-1">{b.title}</h4>
                   <p className="text-sm text-muted-foreground">{b.desc}</p>
@@ -262,15 +252,15 @@ const About = () => {
           </div>
         </section>
 
-        {/* Newsletter Section */}
-        <section className="py-16 border-t border-border">
+        {/* Newsletter */}
+        <section className="py-16">
           <div className="container max-w-2xl text-center">
             <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <div className="w-14 h-14 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center mb-5">
                 <Mail className="h-7 w-7 text-primary" />
               </div>
               <h2 className="text-3xl font-black mb-3">Stay in the Loop</h2>
-              <p className="text-muted-foreground mb-6 max-w-md mx-auto">Get the best tech stories, tutorials, and insights delivered straight to your inbox every week.</p>
+              <p className="text-muted-foreground mb-6 max-w-md mx-auto">Get the best tech stories delivered to your inbox every week.</p>
               <Link to="/newsletter" className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-primary hover:brightness-110 transition-all">
                 Subscribe to Newsletter <ArrowRight className="h-4 w-4" />
               </Link>
