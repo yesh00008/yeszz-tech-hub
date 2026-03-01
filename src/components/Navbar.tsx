@@ -53,7 +53,7 @@ const Navbar = ({ onSearchOpen }: NavbarProps) => {
   }, [location.pathname]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-card/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-xl">
       <div className="container flex h-14 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
