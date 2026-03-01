@@ -15,6 +15,7 @@ import FollowButton from "@/components/FollowButton";
 import TableOfContents from "@/components/TableOfContents";
 import SocialShareButtons from "@/components/SocialShareButtons";
 import ReadingTimeEstimator from "@/components/ReadingTimeEstimator";
+import ReadingModeToggle from "@/components/ReadingModeToggle";
 
 const BlogPost = () => {
   const { slug } = useParams();
@@ -22,6 +23,8 @@ const BlogPost = () => {
   const [post, setPost] = useState<any>(null);
   const [related, setRelated] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [readingDark, setReadingDark] = useState(false);
+  const [readingFontSize, setReadingFontSize] = useState(16);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -148,7 +151,10 @@ const BlogPost = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
-                    className="prose-custom"
+                    className={`prose-custom rounded-xl p-6 transition-colors duration-300 ${
+                      readingDark ? "bg-[hsl(220,20%,12%)] text-[hsl(0,0%,88%)]" : ""
+                    }`}
+                    style={{ fontSize: `${readingFontSize}px`, lineHeight: 1.8 }}
                     dangerouslySetInnerHTML={{ __html: post.content }}
                   />
                 )}
@@ -217,6 +223,7 @@ const BlogPost = () => {
 
       <Footer />
       <BackToTop />
+      <ReadingModeToggle onModeChange={setReadingDark} onFontSizeChange={setReadingFontSize} />
     </div>
   );
 };
