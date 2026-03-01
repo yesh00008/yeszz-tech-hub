@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SearchOverlay from "@/components/SearchOverlay";
+import SmartSearch from "@/components/SmartSearch";
 
 const PrivacyPolicy = () => {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen">
       <Navbar onSearchOpen={() => setSearchOpen(true)} />
-      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <SmartSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
 
       <main className="py-16">
         <div className="container max-w-3xl">

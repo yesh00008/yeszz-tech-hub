@@ -8,7 +8,7 @@ import CategoriesSection from "@/components/CategoriesSection";
 import TrendingSection from "@/components/TrendingSection";
 import PopularThisWeek from "@/components/PopularThisWeek";
 import AuthorSpotlight from "@/components/AuthorSpotlight";
-import SearchOverlay from "@/components/SearchOverlay";
+import SmartSearch from "@/components/SmartSearch";
 import StatsTicker from "@/components/StatsTicker";
 import NewsletterBanner from "@/components/NewsletterBanner";
 import WriteForUsBanner from "@/components/WriteForUsBanner";
@@ -63,7 +63,7 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <Navbar onSearchOpen={handleSearchOpen} />
-      <SearchOverlay open={searchOpen} onClose={handleSearchClose} />
+      <SmartSearch open={searchOpen} onClose={handleSearchClose} />
 
       <main>
         <HeroSection />

@@ -10,7 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAIWriter } from "@/hooks/useAIWriter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SearchOverlay from "@/components/SearchOverlay";
+import SmartSearch from "@/components/SmartSearch";
 import MonacoCodeEditor from "@/components/editor/MonacoCodeEditor";
 import { toast } from "sonner";
 
@@ -211,7 +211,7 @@ const WriteEditor = () => {
   return (
     <div className="min-h-screen">
       <Navbar onSearchOpen={() => setSearchOpen(true)} />
-      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <SmartSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
 
       <main className="py-8">
         <div className="container max-w-7xl">

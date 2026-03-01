@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Globe, Calendar, Eye, FileText, Heart } from "lucide-react";
+import { Globe, Calendar, Eye, FileText, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SearchOverlay from "@/components/SearchOverlay";
+import SmartSearch from "@/components/SmartSearch";
 import PostCard from "@/components/PostCard";
+import FollowButton from "@/components/FollowButton";
 
 const CreatorProfile = () => {
   const { userId } = useParams();
@@ -14,7 +15,7 @@ const CreatorProfile = () => {
   const [profile, setProfile] = useState<any>(null);
   const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const [followerCount, setFollowerCount] = useState(0);
   useEffect(() => {
     const fetchCreator = async () => {
       const { data: prof } = await supabase
@@ -31,6 +32,13 @@ const CreatorProfile = () => {
         .eq("published", true)
         .order("created_at", { ascending: false });
       if (creatorPosts) setPosts(creatorPosts);
+
+      const { count } = await supabase
+        .from("follows")
+        .select("*", { count: "exact", head: true })
+        .eq("following_id", userId!);
+      setFollowerCount(count || 0);
+
       setLoading(false);
     };
     fetchCreator();
@@ -77,7 +85,7 @@ const CreatorProfile = () => {
   return (
     <div className="min-h-screen">
       <Navbar onSearchOpen={() => setSearchOpen(true)} />
-      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <SmartSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
 
       <main className="py-12">
         <div className="container max-w-4xl">
@@ -88,18 +96,20 @@ const CreatorProfile = () => {
                 {profile.display_name?.[0]?.toUpperCase() || "C"}
               </div>
               <div className="flex-1">
-                <h1 className="text-3xl font-black mb-1">{profile.display_name || "Creator"}</h1>
+                <h1 className="text-3xl font-black mb-1 text-primary">{profile.display_name || "Creator"}</h1>
                 {profile.bio && <p className="text-muted-foreground mb-3">{profile.bio}</p>}
-                <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-4">
                   {profile.website && (
                     <a href={profile.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-primary hover:underline">
                       <Globe className="h-3.5 w-3.5" /> Website
                     </a>
                   )}
+                  <span className="inline-flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {followerCount} followers</span>
                   <span className="inline-flex items-center gap-1"><FileText className="h-3.5 w-3.5" /> {posts.length} articles</span>
                   <span className="inline-flex items-center gap-1"><Eye className="h-3.5 w-3.5" /> {totalViews.toLocaleString()} views</span>
                   <span className="inline-flex items-center gap-1"><Calendar className="h-3.5 w-3.5" /> Joined {new Date(profile.created_at).toLocaleDateString("en-US", { month: "short", year: "numeric" })}</span>
                 </div>
+                {userId && <FollowButton authorId={userId} />}
               </div>
             </div>
 

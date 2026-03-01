@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SearchOverlay from "@/components/SearchOverlay";
+import SmartSearch from "@/components/SmartSearch";
 import ReadingProgress from "@/components/ReadingProgress";
 import BackToTop from "@/components/BackToTop";
 import PostCard from "@/components/PostCard";
@@ -96,7 +96,7 @@ const BlogPost = () => {
     <div className="min-h-screen">
       <ReadingProgress />
       <Navbar onSearchOpen={() => setSearchOpen(true)} />
-      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <SmartSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
 
       <article className="py-10">
         <div className="container max-w-4xl">

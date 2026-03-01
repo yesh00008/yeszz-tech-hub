@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SearchOverlay from "@/components/SearchOverlay";
+import SmartSearch from "@/components/SmartSearch";
 
 const services = [
   {
@@ -78,7 +78,7 @@ const CreatorServices = () => {
   return (
     <div className="min-h-screen">
       <Navbar onSearchOpen={() => setSearchOpen(true)} />
-      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <SmartSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
 
       <main>
         {/* Hero */}

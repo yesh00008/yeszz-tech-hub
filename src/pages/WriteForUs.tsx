@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { BookOpen, Send, CheckCircle, Users, Lightbulb, PenTool } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SearchOverlay from "@/components/SearchOverlay";
+import SmartSearch from "@/components/SmartSearch";
 import { toast } from "sonner";
 
 const guidelines = [
@@ -36,7 +36,7 @@ const WriteForUs = () => {
   return (
     <div className="min-h-screen">
       <Navbar onSearchOpen={() => setSearchOpen(true)} />
-      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <SmartSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
 
       <main>
         <section className="bg-hero text-primary-foreground py-20 relative overflow-hidden">

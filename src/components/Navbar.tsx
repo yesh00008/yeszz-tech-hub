@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.png";
+import NotificationBell from "@/components/NotificationBell";
 
 const navLinks = [
   { label: "Home", to: "/" },
@@ -151,9 +152,12 @@ const Navbar = ({ onSearchOpen }: NavbarProps) => {
           </button>
 
           {user && (
-            <Link to="/bookmarks" className="p-2 rounded-lg hover:bg-secondary transition-colors hidden sm:flex" aria-label="Bookmarks">
-              <Bookmark className="h-4 w-4" />
-            </Link>
+            <>
+              <NotificationBell />
+              <Link to="/bookmarks" className="p-2 rounded-lg hover:bg-secondary transition-colors hidden sm:flex" aria-label="Bookmarks">
+                <Bookmark className="h-4 w-4" />
+              </Link>
+            </>
           )}
 
           {user ? (
