@@ -33,7 +33,7 @@ const item = {
 
 const StatsTicker = () => {
   return (
-    <section className="border-y border-border bg-card/80 backdrop-blur-sm py-8 overflow-hidden">
+    <section className="border-y border-border py-8 overflow-hidden">
       <div className="container">
         <motion.div
           variants={container}
@@ -47,7 +47,7 @@ const StatsTicker = () => {
               key={stat.label}
               variants={item}
               whileHover={{ scale: 1.05, y: -4 }}
-              className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border bg-card hover:border-primary/30 hover:shadow-card-hover transition-all duration-300 cursor-default"
+              className="flex flex-col items-center gap-2 p-4 transition-all duration-300 cursor-default"
             >
               <motion.span
                 className="text-2xl"

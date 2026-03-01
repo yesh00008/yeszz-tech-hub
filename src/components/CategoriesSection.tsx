@@ -50,7 +50,7 @@ const CategoriesSection = ({ categories }: CategoriesSectionProps) => {
             <motion.div key={cat.id} variants={item}>
               <Link
                 to={`/category/${cat.slug}`}
-                className="group flex flex-col items-center gap-3 rounded-xl border border-border bg-card p-6 shadow-card hover:shadow-card-hover hover:border-primary/30 hover:-translate-y-1 transition-all duration-300"
+                className="group flex flex-col items-center gap-3 p-6 hover:-translate-y-1 transition-all duration-300"
               >
                 <motion.span
                   className="text-3xl"

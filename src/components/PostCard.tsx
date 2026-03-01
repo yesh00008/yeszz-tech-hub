@@ -47,7 +47,7 @@ const PostCard = ({ post, index = 0, featured = false }: PostCardProps) => {
       className={`group ${featured ? "md:col-span-2 md:row-span-2" : ""}`}
     >
       <Link to={`/post/${post.slug}`} className="block h-full">
-        <div className="h-full rounded-xl border border-border bg-card shadow-card hover:shadow-card-hover hover:border-primary/30 transition-all duration-300 overflow-hidden">
+        <div className="h-full rounded-xl transition-all duration-300 overflow-hidden">
           <div className={`relative overflow-hidden ${featured ? "aspect-[16/9]" : "aspect-[16/10]"}`}>
             <img
               src={post.image}
@@ -62,7 +62,7 @@ const PostCard = ({ post, index = 0, featured = false }: PostCardProps) => {
               </span>
             </div>
             <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0">
-              <div className="w-8 h-8 rounded-full bg-card/90 backdrop-blur-sm flex items-center justify-center shadow-card">
+              <div className="w-8 h-8 rounded-full bg-background/90 backdrop-blur-sm flex items-center justify-center">
                 <ArrowUpRight className="h-4 w-4 text-primary" />
               </div>
             </div>

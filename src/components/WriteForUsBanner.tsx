@@ -12,7 +12,7 @@ const WriteForUsBanner = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, type: "spring" as const, stiffness: 120 }}
           whileHover={{ scale: 1.01 }}
-          className="flex flex-col sm:flex-row items-center justify-between gap-6 rounded-2xl border border-border bg-card p-8 shadow-card hover:shadow-card-hover hover:border-primary/30 transition-all duration-300"
+          className="flex flex-col sm:flex-row items-center justify-between gap-6 p-8 transition-all duration-300"
         >
           <div className="flex items-center gap-4">
             <motion.div

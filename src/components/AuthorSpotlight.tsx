@@ -81,7 +81,7 @@ const AuthorSpotlight = () => {
             <motion.div key={author.user_id} variants={item} whileHover={{ y: -6 }}>
               <Link
                 to={`/creator/${author.user_id}`}
-                className="group block rounded-xl border border-border bg-card p-6 shadow-card hover:shadow-card-hover hover:border-primary/30 transition-all duration-300 text-center"
+                className="group block p-6 transition-all duration-300 text-center"
               >
                 <motion.div
                   whileHover={{ scale: 1.1 }}

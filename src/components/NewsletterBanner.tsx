@@ -11,16 +11,8 @@ const NewsletterBanner = () => {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, type: "spring" as const, stiffness: 100 }}
-          className="rounded-2xl border border-border bg-card p-10 md:p-14 relative overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-500"
+          className="p-10 md:p-14 relative overflow-hidden"
         >
-          {/* Dot grid overlay */}
-          <div className="absolute inset-0 opacity-[0.04]" style={{
-            backgroundImage: "radial-gradient(circle, hsl(151 72% 40%) 1px, transparent 0)",
-            backgroundSize: "16px 16px"
-          }} />
-          {/* Green glow */}
-          <div className="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-primary/[0.06] blur-[100px]" />
-          <div className="absolute bottom-0 left-0 w-[200px] h-[200px] rounded-full bg-primary/[0.04] blur-[80px]" />
 
           <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>

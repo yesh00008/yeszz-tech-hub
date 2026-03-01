@@ -54,7 +54,7 @@ const PopularThisWeek = () => {
               className="row-span-2"
             >
               <Link to={`/post/${posts[0].slug}`} className="group block h-full">
-                <div className="h-full rounded-xl border border-border bg-card shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden relative">
+                <div className="h-full rounded-xl transition-all duration-300 overflow-hidden relative">
                   <div className="aspect-[16/10] lg:aspect-auto lg:h-full relative">
                     <img
                       src={posts[0].image_url || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80"}
@@ -94,7 +94,7 @@ const PopularThisWeek = () => {
               >
                 <Link
                   to={`/post/${post.slug}`}
-                  className="group flex gap-4 rounded-xl border border-border bg-card p-4 shadow-card hover:shadow-card-hover hover:border-primary/30 transition-all duration-300"
+                  className="group flex gap-4 p-4 transition-all duration-300"
                 >
                   <div className="w-20 h-20 rounded-lg overflow-hidden shrink-0">
                     <img
