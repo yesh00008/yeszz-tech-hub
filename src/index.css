@@ -100,7 +100,7 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    background-image: radial-gradient(circle, #c0c0c0 1.2px, transparent 1.2px);
+    background-image: radial-gradient(circle, #d4d4d4 1px, transparent 1px);
     background-size: 22px 22px;
     min-height: 100vh;
   }
@@ -111,7 +111,7 @@
 }
 
 html.dark body {
-  background-image: radial-gradient(circle, rgba(255,255,255,0.12) 1.2px, transparent 1.2px);
+  background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
   background-size: 22px 22px;
 }
 

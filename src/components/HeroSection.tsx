@@ -11,7 +11,7 @@ const floatingVariants = {
 
 const HeroSection = () => {
   return (
-    <section className="relative overflow-hidden py-20 md:py-28 border-b border-border">
+    <section className="relative overflow-hidden py-20 md:py-28">
       {/* Subtle green glow */}
       <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/[0.06] blur-[120px]" />
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-primary/[0.04] blur-[100px]" />
