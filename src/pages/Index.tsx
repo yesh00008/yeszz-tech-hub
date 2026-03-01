@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -30,6 +30,9 @@ const Index = () => {
   const [posts, setPosts] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(6);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const latestRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,7 +62,16 @@ const Index = () => {
   }, []);
 
   const featured = posts.filter((p) => p.featured);
-  const latest = posts.slice(0, 9);
+  const latest = posts.slice(0, visibleCount);
+  const hasMore = posts.length > visibleCount;
+
+  const loadMore = useCallback(() => {
+    setLoadingMore(true);
+    setTimeout(() => {
+      setVisibleCount((v) => Math.min(v + 6, posts.length));
+      setLoadingMore(false);
+    }, 400);
+  }, [posts.length]);
 
   return (
     <div className="min-h-screen">
@@ -130,43 +142,52 @@ const Index = () => {
                 ))}
               </div>
             ) : latest.length > 0 ? (
-              <motion.div
-                variants={container}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
-              >
-                {latest.map((post, i) => (
-                  <motion.div key={post.id} variants={item}>
-                    <PostCard
-                      post={{
-                        id: post.id,
-                        title: post.title,
-                        summary: post.summary || "",
-                        category: post.categories?.name || "General",
-                        image: post.image_url || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
-                        date: new Date(post.published_at || post.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
-                        readTime: post.read_time || "5 min",
-                        author: "Yeszz Team",
-                        slug: post.slug,
-                        featured: post.featured,
-                      }}
-                      index={i}
-                      featured={i === 0 && post.featured}
-                    />
-                  </motion.div>
-                ))}
-              </motion.div>
+              <>
+                <motion.div
+                  variants={container}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                >
+                  {latest.map((post, i) => (
+                    <motion.div key={post.id} variants={item}>
+                      <PostCard
+                        post={{
+                          id: post.id,
+                          title: post.title,
+                          summary: post.summary || "",
+                          category: post.categories?.name || "General",
+                          image: post.image_url || "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+                          date: new Date(post.published_at || post.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+                          readTime: post.read_time || "5 min",
+                          author: "Yeszz Team",
+                          slug: post.slug,
+                          featured: post.featured,
+                        }}
+                        index={i}
+                        featured={i === 0 && post.featured}
+                      />
+                    </motion.div>
+                  ))}
+                </motion.div>
+                {hasMore && (
+                  <div className="flex justify-center mt-10">
+                    <button
+                      onClick={loadMore}
+                      disabled={loadingMore}
+                      className="px-8 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:brightness-110 transition-all disabled:opacity-60"
+                    >
+                      {loadingMore ? "Loading..." : "Load More Articles"}
+                    </button>
+                  </div>
+                )}
+              </>
             ) : (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-center py-20"
-              >
+              <div className="text-center py-20">
                 <p className="text-muted-foreground text-lg mb-2">No articles yet</p>
                 <p className="text-sm text-muted-foreground">Articles will appear here once published.</p>
-              </motion.div>
+              </div>
             )}
           </div>
         </section>
