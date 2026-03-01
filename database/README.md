@@ -5,16 +5,17 @@ All SQL queries for setting up the database. Run them **in order**.
 | # | File | Description |
 |---|------|-------------|
 | 1 | `01-core-tables.sql` | Profiles, Categories, Posts, Comments, Newsletter |
-| 2 | `02-functions-triggers.sql` | Auto-update timestamps, auto-create profile on signup |
+| 2 | `02-functions-triggers.sql` | Auto-update timestamps, auto-create profile, notification triggers |
 | 3 | `03-creator-features.sql` | Tags, Post Tags, Creator Tips |
-| 4 | `04-engagement.sql` | Bookmarks, Follows, Reactions |
-| 5 | `05-seed-categories.sql` | 6 default categories |
+| 4 | `04-engagement.sql` | Bookmarks, Follows, Reactions, Notifications (with realtime) |
+| 5 | `05-seed-categories.sql` | 16 default categories |
 | 6 | `06-seed-sample-posts.sql` | 12 sample blog posts |
+| 7 | `07-seed-tags.sql` | 40 trending topic tags |
 
 ## Quick Start
 
 1. Go to your database SQL Editor
-2. Run each file in order (1 → 6)
+2. Run each file in order (1 → 7)
 3. All tables have Row Level Security (RLS) enabled
 
 ## Tables Overview
@@ -32,3 +33,17 @@ All SQL queries for setting up the database. Run them **in order**.
 | `bookmarks` | User reading lists | Owner only |
 | `follows` | Author follow system | Public read, owner manage |
 | `reactions` | Post likes/reactions | Public read, owner manage |
+| `notifications` | Real-time user notifications | Owner read/update, system insert |
+
+## Functions & Triggers
+
+| Function | Trigger | Description |
+|----------|---------|-------------|
+| `update_updated_at_column()` | `update_profiles_updated_at`, `update_posts_updated_at` | Auto-updates `updated_at` on row changes |
+| `handle_new_user()` | `on_auth_user_created` | Auto-creates profile when user signs up |
+| `notify_on_comment()` | `on_new_comment` | Sends notification to post author on new comment |
+| `notify_on_follow()` | `on_new_follow` | Sends notification when someone follows a user |
+
+## Realtime
+
+The `notifications` table has realtime enabled via `supabase_realtime` publication for instant push notifications.
