@@ -2,8 +2,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { AnimatePresence } from "framer-motion";
+import PageTransition from "@/components/PageTransition";
 import Index from "./pages/Index";
 import BlogPost from "./pages/BlogPost";
 import Auth from "./pages/Auth";
@@ -24,8 +26,42 @@ import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
+import Sponsorship from "./pages/Sponsorship";
 
 const queryClient = new QueryClient();
+
+const AnimatedRoutes = () => {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+        <Route path="/post/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
+        <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
+        <Route path="/profile" element={<PageTransition><Profile /></PageTransition>} />
+        <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+        <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+        <Route path="/categories" element={<PageTransition><Categories /></PageTransition>} />
+        <Route path="/category/:slug" element={<PageTransition><CategoryDetail /></PageTransition>} />
+        <Route path="/newsletter" element={<PageTransition><Newsletter /></PageTransition>} />
+        <Route path="/write-for-us" element={<PageTransition><WriteForUs /></PageTransition>} />
+        <Route path="/creator/services" element={<PageTransition><CreatorServices /></PageTransition>} />
+        <Route path="/creator/dashboard" element={<PageTransition><CreatorDashboard /></PageTransition>} />
+        <Route path="/creator/write" element={<PageTransition><WriteEditor /></PageTransition>} />
+        <Route path="/creator/write/:id" element={<PageTransition><WriteEditor /></PageTransition>} />
+        <Route path="/creator/:userId" element={<PageTransition><CreatorProfile /></PageTransition>} />
+        <Route path="/bookmarks" element={<PageTransition><Bookmarks /></PageTransition>} />
+        <Route path="/tag/:slug" element={<PageTransition><TagPage /></PageTransition>} />
+        <Route path="/careers" element={<PageTransition><Careers /></PageTransition>} />
+        <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
+        <Route path="/terms-of-service" element={<PageTransition><TermsOfService /></PageTransition>} />
+        <Route path="/sponsorship" element={<PageTransition><Sponsorship /></PageTransition>} />
+        <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -34,29 +70,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/post/:slug" element={<BlogPost />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/category/:slug" element={<CategoryDetail />} />
-            <Route path="/newsletter" element={<Newsletter />} />
-            <Route path="/write-for-us" element={<WriteForUs />} />
-            <Route path="/creator/services" element={<CreatorServices />} />
-            <Route path="/creator/dashboard" element={<CreatorDashboard />} />
-            <Route path="/creator/write" element={<WriteEditor />} />
-            <Route path="/creator/write/:id" element={<WriteEditor />} />
-            <Route path="/creator/:userId" element={<CreatorProfile />} />
-            <Route path="/bookmarks" element={<Bookmarks />} />
-            <Route path="/tag/:slug" element={<TagPage />} />
-            <Route path="/careers" element={<Careers />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/terms-of-service" element={<TermsOfService />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AnimatedRoutes />
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
