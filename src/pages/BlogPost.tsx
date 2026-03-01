@@ -120,7 +120,7 @@ const BlogPost = () => {
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight mb-4">{post.title}</h1>
             <p className="text-lg text-muted-foreground mb-6">{post.summary}</p>
 
-            <div className="flex items-center justify-between flex-wrap gap-4 mb-8 pb-8 border-b border-border">
+            <div className="flex items-center justify-between flex-wrap gap-4 mb-8 pb-8">
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary">Y</div>
                 <span className="font-medium text-foreground">Yeszz Team</span>
@@ -175,7 +175,7 @@ const BlogPost = () => {
             )}
 
             {/* Reactions & Bookmark */}
-            <div className="mt-10 pt-8 border-t border-border flex items-center justify-between flex-wrap gap-4">
+            <div className="mt-10 pt-8 flex items-center justify-between flex-wrap gap-4">
               <PostReactions
                 postId={post.id}
                 onCommentClick={() => document.getElementById("comments")?.scrollIntoView({ behavior: "smooth" })}
@@ -192,7 +192,7 @@ const BlogPost = () => {
       </article>
 
       {related.length > 0 && (
-        <section className="py-16 border-t border-border">
+        <section className="py-16">
           <div className="container max-w-3xl">
             <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">

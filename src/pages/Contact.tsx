@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MessageSquare, Send, MapPin, Phone } from "lucide-react";
+import { Mail, Send, MapPin, Phone } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SearchOverlay from "@/components/SearchOverlay";
@@ -46,11 +46,7 @@ const Contact = () => {
                 { icon: MapPin, title: "Location", info: "San Francisco, CA" },
                 { icon: Phone, title: "Phone", info: "+1 (555) 000-0000" },
               ].map((c) => (
-                <motion.div
-                  key={c.title}
-                  variants={item}
-                  className="rounded-xl border border-border bg-card p-5 shadow-card hover:shadow-card-hover hover:border-primary/30 transition-all duration-300"
-                >
+                <motion.div key={c.title} variants={item} className="p-5">
                   <c.icon className="h-5 w-5 text-primary mb-2" />
                   <h3 className="font-semibold text-sm">{c.title}</h3>
                   <p className="text-sm text-muted-foreground">{c.info}</p>
@@ -63,54 +59,31 @@ const Contact = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               onSubmit={handleSubmit}
-              className="lg:col-span-2 rounded-2xl border border-border bg-card p-6 shadow-card space-y-4"
+              className="lg:col-span-2 p-6 space-y-4"
             >
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className="text-sm font-medium mb-1.5 block">Name</label>
-                  <input
-                    type="text"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    required
-                    className="w-full rounded-lg border border-input bg-secondary px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
-                  />
+                  <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required
+                    className="w-full rounded-lg border border-input px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" />
                 </div>
                 <div>
                   <label className="text-sm font-medium mb-1.5 block">Email</label>
-                  <input
-                    type="email"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    required
-                    className="w-full rounded-lg border border-input bg-secondary px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
-                  />
+                  <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required
+                    className="w-full rounded-lg border border-input px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" />
                 </div>
               </div>
               <div>
                 <label className="text-sm font-medium mb-1.5 block">Subject</label>
-                <input
-                  type="text"
-                  value={form.subject}
-                  onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                  required
-                  className="w-full rounded-lg border border-input bg-secondary px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
-                />
+                <input type="text" value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} required
+                  className="w-full rounded-lg border border-input px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" />
               </div>
               <div>
                 <label className="text-sm font-medium mb-1.5 block">Message</label>
-                <textarea
-                  value={form.message}
-                  onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  required
-                  rows={5}
-                  className="w-full rounded-lg border border-input bg-secondary px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-none"
-                />
+                <textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} required rows={5}
+                  className="w-full rounded-lg border border-input px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-none" />
               </div>
-              <button
-                type="submit"
-                className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-primary hover:brightness-110 transition-all"
-              >
+              <button type="submit" className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-primary hover:brightness-110 transition-all">
                 <Send className="h-4 w-4" /> Send Message
               </button>
             </motion.form>
