@@ -42,7 +42,7 @@ const CreatorProfile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen">
         <Navbar onSearchOpen={() => setSearchOpen(true)} />
         <div className="container max-w-4xl py-20">
           <div className="animate-pulse space-y-6">
@@ -64,7 +64,7 @@ const CreatorProfile = () => {
 
   if (!profile) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl font-black text-gradient mb-4">404</div>
           <h1 className="text-2xl font-bold mb-3">Creator Not Found</h1>
@@ -75,7 +75,7 @@ const CreatorProfile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navbar onSearchOpen={() => setSearchOpen(true)} />
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
 
