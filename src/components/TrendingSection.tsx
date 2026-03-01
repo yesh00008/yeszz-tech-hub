@@ -1,10 +1,27 @@
 import { Link } from "react-router-dom";
-import { TrendingUp, Clock } from "lucide-react";
+import { TrendingUp, Clock, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface TrendingSectionProps {
   posts: any[];
 }
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, x: -20 },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { type: "spring" as const, stiffness: 150, damping: 15 },
+  },
+};
 
 const TrendingSection = ({ posts }: TrendingSectionProps) => {
   const trending = posts.filter((p) => p.trending).slice(0, 4);
@@ -14,24 +31,36 @@ const TrendingSection = ({ posts }: TrendingSectionProps) => {
   return (
     <section className="py-16 border-t border-border">
       <div className="container">
-        <div className="flex items-center gap-2 mb-8">
-          <TrendingUp className="h-5 w-5 text-primary" />
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="flex items-center gap-3 mb-8"
+        >
+          <motion.div
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"
+          >
+            <TrendingUp className="h-4 w-4 text-primary" />
+          </motion.div>
           <h2 className="text-2xl font-bold">Trending Now</h2>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        </motion.div>
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"
+        >
           {trending.map((post, i) => (
-            <motion.div
-              key={post.id}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: i * 0.05 }}
-              viewport={{ once: true }}
-            >
+            <motion.div key={post.id} variants={item}>
               <Link
                 to={`/post/${post.slug}`}
-                className="group flex gap-4 items-start rounded-xl border border-border bg-card p-4 shadow-card hover:shadow-card-hover hover:border-primary/30 transition-all duration-300"
+                className="group flex gap-4 items-start rounded-xl border border-border bg-card p-4 shadow-card hover:shadow-card-hover hover:border-primary/30 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
               >
-                <span className="text-3xl font-black text-primary/20 group-hover:text-primary/40 transition-colors">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-primary/[0.03] rounded-bl-full" />
+                <span className="text-3xl font-black text-primary/15 group-hover:text-primary/30 transition-colors">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div className="flex-1 min-w-0">
@@ -47,10 +76,11 @@ const TrendingSection = ({ posts }: TrendingSectionProps) => {
                     </span>
                   </div>
                 </div>
+                <ArrowUpRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:text-primary transition-all shrink-0" />
               </Link>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
