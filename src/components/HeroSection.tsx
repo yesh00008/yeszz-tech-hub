@@ -1,13 +1,6 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Zap, Sparkles } from "lucide-react";
+import { ArrowRight, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
-
-const floatingVariants = {
-  animate: {
-    y: [0, -8, 0],
-    transition: { duration: 3, repeat: Infinity, ease: "easeInOut" as const },
-  },
-};
 
 const HeroSection = () => {
   return (
@@ -15,27 +8,6 @@ const HeroSection = () => {
       {/* Subtle green glow */}
       <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/[0.06] blur-[120px]" />
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-primary/[0.04] blur-[100px]" />
-
-      {/* Floating decorative elements */}
-      <motion.div
-        variants={floatingVariants}
-        animate="animate"
-        className="absolute top-16 right-[15%] hidden md:block"
-      >
-        <div className="w-12 h-12 rounded-xl flex items-center justify-center">
-          <Sparkles className="h-5 w-5 text-primary" />
-        </div>
-      </motion.div>
-      <motion.div
-        variants={floatingVariants}
-        animate="animate"
-        style={{ animationDelay: "1s" }}
-        className="absolute bottom-20 right-[25%] hidden md:block"
-      >
-        <div className="w-10 h-10 rounded-lg flex items-center justify-center">
-          <span className="text-primary text-lg">⚡</span>
-        </div>
-      </motion.div>
 
       <div className="container relative">
         <motion.div
