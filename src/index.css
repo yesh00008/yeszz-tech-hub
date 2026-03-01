@@ -30,8 +30,8 @@
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 16% 91%;
-    --input: 210 16% 91%;
+    --border: 210 16% 88%;
+    --input: 210 16% 88%;
     --ring: 151 72% 40%;
 
     --radius: 0.625rem;
@@ -100,6 +100,9 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    background-image: radial-gradient(circle, hsl(var(--border)) 1px, transparent 0);
+    background-size: 20px 20px;
+    background-position: 0 0;
   }
 
   h1, h2, h3, h4, h5, h6 {
