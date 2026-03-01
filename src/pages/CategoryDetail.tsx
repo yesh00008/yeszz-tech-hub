@@ -52,14 +52,10 @@ const CategoryDetail = () => {
 
       <main>
         {/* Hero Banner */}
-        <section className="bg-hero text-primary-foreground py-16 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-[0.03]" style={{
-            backgroundImage: "linear-gradient(hsl(151 72% 40%) 1px, transparent 1px), linear-gradient(90deg, hsl(151 72% 40%) 1px, transparent 1px)",
-            backgroundSize: "60px 60px"
-          }} />
+        <section className="py-16 relative overflow-hidden">
           <div className="container relative">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-              <Link to="/categories" className="inline-flex items-center gap-2 text-sm opacity-60 hover:opacity-100 transition-opacity mb-6">
+              <Link to="/categories" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-6">
                 <ArrowLeft className="h-4 w-4" /> All Categories
               </Link>
 
@@ -67,9 +63,9 @@ const CategoryDetail = () => {
                 <div className="flex items-center gap-5">
                   <span className="text-6xl">{category.icon}</span>
                   <div>
-                    <h1 className="text-4xl sm:text-5xl font-black">{category.name}</h1>
-                    <p className="opacity-70 mt-2 max-w-lg">{category.description}</p>
-                    <div className="flex items-center gap-4 mt-3 text-sm opacity-60">
+                    <h1 className="text-4xl sm:text-5xl font-black text-primary">{category.name}</h1>
+                    <p className="text-muted-foreground mt-2 max-w-lg">{category.description}</p>
+                    <div className="flex items-center gap-4 mt-3 text-sm text-muted-foreground">
                       <span className="inline-flex items-center gap-1"><BookOpen className="h-4 w-4" /> {postCount} Articles</span>
                       <span className="inline-flex items-center gap-1"><TrendingUp className="h-4 w-4" /> Trending</span>
                     </div>
@@ -87,7 +83,7 @@ const CategoryDetail = () => {
               {loading ? (
                 <div className="grid sm:grid-cols-2 gap-6">
                   {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="rounded-xl border border-border bg-card overflow-hidden animate-pulse">
+                    <div key={i} className="rounded-xl overflow-hidden animate-pulse">
                       <div className="aspect-[16/10] bg-secondary" />
                       <div className="p-5 space-y-3">
                         <div className="h-4 bg-secondary rounded w-3/4" />
@@ -118,7 +114,7 @@ const CategoryDetail = () => {
                   ))}
                 </motion.div>
               ) : (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20 rounded-xl border border-border bg-card">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20 rounded-xl">
                   <Clock className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-40" />
                   <h3 className="text-lg font-semibold mb-2">No Articles Yet</h3>
                   <p className="text-muted-foreground text-sm">We're working on great content for this category. Check back soon!</p>
@@ -129,7 +125,7 @@ const CategoryDetail = () => {
             {/* Sidebar */}
             <aside className="lg:w-72 shrink-0">
               <div className="sticky top-24 space-y-6">
-                <div className="rounded-xl border border-border bg-card p-5 shadow-card">
+                <div className="p-5">
                   <h3 className="font-bold text-sm mb-4">Browse Categories</h3>
                   <div className="space-y-1.5">
                     {allCategories.map((cat) => (
@@ -149,7 +145,7 @@ const CategoryDetail = () => {
                   </div>
                 </div>
 
-                <div className="rounded-xl border border-border bg-card p-5 shadow-card">
+                <div className="p-5">
                   <h3 className="font-bold text-sm mb-3">About this Category</h3>
                   {category && (
                     <p className="text-sm text-muted-foreground leading-relaxed">{category.description}</p>

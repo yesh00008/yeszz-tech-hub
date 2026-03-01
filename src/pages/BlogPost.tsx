@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Clock, Calendar, Copy, Check, Share2 } from "lucide-react";
+import { ArrowLeft, Calendar, Eye } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,11 +12,13 @@ import PostCard from "@/components/PostCard";
 import PostReactions from "@/components/PostReactions";
 import CommentsSection from "@/components/CommentsSection";
 import FollowButton from "@/components/FollowButton";
+import TableOfContents from "@/components/TableOfContents";
+import SocialShareButtons from "@/components/SocialShareButtons";
+import ReadingTimeEstimator from "@/components/ReadingTimeEstimator";
 
 const BlogPost = () => {
   const { slug } = useParams();
   const [searchOpen, setSearchOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [post, setPost] = useState<any>(null);
   const [related, setRelated] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -33,6 +35,8 @@ const BlogPost = () => {
 
       if (data) {
         setPost(data);
+        // Increment views
+        supabase.from("posts").update({ views: (data.views || 0) + 1 }).eq("id", data.id).then();
         const { data: rel } = await supabase
           .from("posts")
           .select("*, categories(name, slug, icon)")
@@ -47,12 +51,6 @@ const BlogPost = () => {
     fetchPost();
   }, [slug]);
 
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   const categoryColors: Record<string, string> = {
     AI: "bg-primary/10 text-primary",
     Cybersecurity: "bg-destructive/10 text-destructive",
@@ -66,18 +64,12 @@ const BlogPost = () => {
     return (
       <div className="min-h-screen">
         <Navbar onSearchOpen={() => setSearchOpen(true)} />
-        <div className="container max-w-3xl py-20">
+        <div className="container max-w-4xl py-20">
           <div className="space-y-4 animate-pulse">
             <div className="h-4 bg-secondary rounded w-20" />
             <div className="h-10 bg-secondary rounded w-3/4" />
             <div className="h-6 bg-secondary rounded w-1/2" />
-            <div className="h-4 bg-secondary rounded w-1/3" />
             <div className="h-64 bg-secondary rounded-xl mt-8" />
-            <div className="space-y-3 mt-8">
-              <div className="h-4 bg-secondary rounded" />
-              <div className="h-4 bg-secondary rounded w-5/6" />
-              <div className="h-4 bg-secondary rounded w-4/6" />
-            </div>
           </div>
         </div>
       </div>
@@ -107,9 +99,9 @@ const BlogPost = () => {
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
 
       <article className="py-10">
-        <div className="container max-w-3xl">
+        <div className="container max-w-4xl">
           <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-            <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6">
+            <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-6">
               <ArrowLeft className="h-4 w-4" /> Back to articles
             </Link>
 
@@ -117,7 +109,7 @@ const BlogPost = () => {
               {catName}
             </span>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight mb-4">{post.title}</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight mb-4 text-primary">{post.title}</h1>
             <p className="text-lg text-muted-foreground mb-6">{post.summary}</p>
 
             <div className="flex items-center justify-between flex-wrap gap-4 mb-8 pb-8">
@@ -128,29 +120,13 @@ const BlogPost = () => {
                   <Calendar className="h-3.5 w-3.5" />
                   {new Date(post.published_at || post.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                 </span>
+                {post.content && <ReadingTimeEstimator content={post.content} />}
                 <span className="inline-flex items-center gap-1">
-                  <Clock className="h-3.5 w-3.5" />
-                  {post.read_time || "5 min"}
+                  <Eye className="h-3.5 w-3.5" />
+                  {post.views || 0} views
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handleCopyLink}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-all"
-                >
-                  {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-                  {copied ? "Copied!" : "Copy link"}
-                </button>
-                <a
-                  href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg border border-border hover:bg-secondary transition-colors"
-                  aria-label="Share on Twitter"
-                >
-                  <Share2 className="h-4 w-4 text-muted-foreground" />
-                </a>
-              </div>
+              <SocialShareButtons url={window.location.href} title={post.title} />
             </div>
 
             {post.image_url && (
@@ -164,17 +140,31 @@ const BlogPost = () => {
               </motion.div>
             )}
 
-            {post.content && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-                className="prose-custom"
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              />
-            )}
+            {/* Content with TOC sidebar */}
+            <div className="flex gap-10">
+              <div className="flex-1 min-w-0">
+                {post.content && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                    className="prose-custom"
+                    dangerouslySetInnerHTML={{ __html: post.content }}
+                  />
+                )}
+              </div>
+              
+              {/* Table of Contents - desktop sidebar */}
+              {post.content && (
+                <aside className="hidden lg:block w-56 shrink-0">
+                  <div className="sticky top-20">
+                    <TableOfContents contentHtml={post.content} />
+                  </div>
+                </aside>
+              )}
+            </div>
 
-            {/* Reactions & Bookmark */}
+            {/* Reactions & Follow */}
             <div className="mt-10 pt-8 flex items-center justify-between flex-wrap gap-4">
               <PostReactions
                 postId={post.id}
@@ -185,6 +175,12 @@ const BlogPost = () => {
               )}
             </div>
 
+            {/* Share bar at bottom */}
+            <div className="mt-6 py-4 flex items-center justify-between">
+              <span className="text-sm font-semibold text-muted-foreground">Share this article</span>
+              <SocialShareButtons url={window.location.href} title={post.title} />
+            </div>
+
             {/* Comments */}
             <CommentsSection postId={post.id} />
           </motion.div>
@@ -193,8 +189,9 @@ const BlogPost = () => {
 
       {related.length > 0 && (
         <section className="py-16">
-          <div className="container max-w-3xl">
-            <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
+          <div className="container max-w-4xl">
+            <h2 className="text-2xl font-bold mb-2">Related Articles</h2>
+            <p className="text-sm text-muted-foreground mb-8">More from {catName}</p>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {related.map((p, i) => (
                 <PostCard
