@@ -22,7 +22,7 @@ const HeroSection = () => {
         animate="animate"
         className="absolute top-16 right-[15%] hidden md:block"
       >
-        <div className="w-12 h-12 rounded-xl border border-border bg-card shadow-card flex items-center justify-center">
+        <div className="w-12 h-12 rounded-xl flex items-center justify-center">
           <Sparkles className="h-5 w-5 text-primary" />
         </div>
       </motion.div>
@@ -32,7 +32,7 @@ const HeroSection = () => {
         style={{ animationDelay: "1s" }}
         className="absolute bottom-20 right-[25%] hidden md:block"
       >
-        <div className="w-10 h-10 rounded-lg border border-border bg-card shadow-card flex items-center justify-center">
+        <div className="w-10 h-10 rounded-lg flex items-center justify-center">
           <span className="text-primary text-lg">⚡</span>
         </div>
       </motion.div>
@@ -89,7 +89,7 @@ const HeroSection = () => {
             </a>
             <Link
               to="/categories"
-              className="hover-scale inline-flex items-center gap-2 rounded-lg border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground hover:border-primary/30 hover:bg-primary/5 transition-all"
+              className="hover-scale inline-flex items-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-semibold text-foreground hover:border-primary/30 hover:bg-primary/5 transition-all"
             >
               Browse Categories
             </Link>

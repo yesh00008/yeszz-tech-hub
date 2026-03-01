@@ -57,7 +57,7 @@ const TrendingSection = ({ posts }: TrendingSectionProps) => {
             <motion.div key={post.id} variants={item}>
               <Link
                 to={`/post/${post.slug}`}
-                className="group flex gap-4 items-start rounded-xl border border-border bg-card p-4 shadow-card hover:shadow-card-hover hover:border-primary/30 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+                className="group flex gap-4 items-start p-4 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-20 h-20 bg-primary/[0.03] rounded-bl-full" />
                 <span className="text-3xl font-black text-primary/15 group-hover:text-primary/30 transition-colors">

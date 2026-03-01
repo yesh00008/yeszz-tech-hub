@@ -38,7 +38,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="border-t border-border bg-card/80 backdrop-blur-sm py-12">
+    <footer className="border-t border-border py-12">
       <div className="container">
         <motion.div
           variants={container}
