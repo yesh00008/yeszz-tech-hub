@@ -14,6 +14,7 @@ import NewsletterBanner from "@/components/NewsletterBanner";
 import WriteForUsBanner from "@/components/WriteForUsBanner";
 import BackToTop from "@/components/BackToTop";
 import Footer from "@/components/Footer";
+import TrendingTagsCloud from "@/components/TrendingTagsCloud";
 
 const container = {
   hidden: { opacity: 0 },
@@ -211,6 +212,15 @@ const Index = () => {
             </div>
           </section>
         )}
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <TrendingTagsCloud />
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
