@@ -66,7 +66,7 @@ const CommentsSection = ({ postId }: CommentsSectionProps) => {
   };
 
   return (
-    <section id="comments" className="py-10 border-t border-border">
+    <section id="comments" className="py-10">
       <div className="flex items-center gap-2 mb-6">
         <MessageCircle className="h-5 w-5 text-primary" />
         <h3 className="text-xl font-bold">Comments ({comments.length})</h3>

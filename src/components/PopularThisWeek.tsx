@@ -38,7 +38,7 @@ const PopularThisWeek = () => {
   if (posts.length === 0) return null;
 
   return (
-    <section className="py-16 border-t border-border">
+    <section className="py-16">
       <div className="container">
         <div className="flex items-center gap-2 mb-8">
           <Flame className="h-5 w-5 text-destructive" />

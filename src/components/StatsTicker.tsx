@@ -33,7 +33,7 @@ const item = {
 
 const StatsTicker = () => {
   return (
-    <section className="border-y border-border py-8 overflow-hidden">
+    <section className="py-8 overflow-hidden">
       <div className="container">
         <motion.div
           variants={container}

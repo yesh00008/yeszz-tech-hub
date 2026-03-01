@@ -52,7 +52,7 @@ const AuthorSpotlight = () => {
   if (authors.length === 0) return null;
 
   return (
-    <section className="py-16 border-t border-border">
+    <section className="py-16">
       <div className="container">
         <motion.div
           initial={{ opacity: 0, x: -20 }}

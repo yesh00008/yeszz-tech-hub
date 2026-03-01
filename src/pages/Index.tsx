@@ -104,7 +104,7 @@ const Index = () => {
           <PopularThisWeek />
         </motion.div>
 
-        <section id="latest" className="py-16 border-t border-border">
+        <section id="latest" className="py-16">
           <div className="container">
             <motion.h2
               initial={{ opacity: 0, x: -20 }}
@@ -171,7 +171,7 @@ const Index = () => {
         </section>
 
         {featured.length > 1 && (
-          <section className="py-16 border-t border-border">
+          <section className="py-16">
             <div className="container">
               <motion.h2
                 initial={{ opacity: 0, x: -20 }}
