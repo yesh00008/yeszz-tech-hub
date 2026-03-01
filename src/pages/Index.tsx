@@ -61,7 +61,7 @@ const Index = () => {
   const latest = posts.slice(0, 9);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navbar onSearchOpen={handleSearchOpen} />
       <SearchOverlay open={searchOpen} onClose={handleSearchClose} />
 

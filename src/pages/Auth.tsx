@@ -63,7 +63,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navbar onSearchOpen={() => {}} />
       <main className="flex items-center justify-center py-20 px-4">
         <motion.div
