@@ -1,45 +1,83 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Zap } from "lucide-react";
+import { ArrowRight, Zap, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+
+const floatingVariants = {
+  animate: {
+    y: [0, -8, 0],
+    transition: { duration: 3, repeat: Infinity, ease: "easeInOut" as const },
+  },
+};
 
 const HeroSection = () => {
   return (
     <section className="relative overflow-hidden py-20 md:py-28 border-b border-border">
-      {/* Dot grid inherited from body, clean white bg */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.03] to-transparent" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/5 blur-[100px]" />
+      {/* Subtle green glow */}
+      <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/[0.06] blur-[120px]" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-primary/[0.04] blur-[100px]" />
+
+      {/* Floating decorative elements */}
+      <motion.div
+        variants={floatingVariants}
+        animate="animate"
+        className="absolute top-16 right-[15%] hidden md:block"
+      >
+        <div className="w-12 h-12 rounded-xl border border-border bg-card shadow-card flex items-center justify-center">
+          <Sparkles className="h-5 w-5 text-primary" />
+        </div>
+      </motion.div>
+      <motion.div
+        variants={floatingVariants}
+        animate="animate"
+        style={{ animationDelay: "1s" }}
+        className="absolute bottom-20 right-[25%] hidden md:block"
+      >
+        <div className="w-10 h-10 rounded-lg border border-border bg-card shadow-card flex items-center justify-center">
+          <span className="text-primary text-lg">⚡</span>
+        </div>
+      </motion.div>
 
       <div className="container relative">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
           className="max-w-3xl"
         >
           <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-4 py-1.5 text-sm font-medium text-foreground mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.4 }}
+            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary mb-6"
           >
-            <Zap className="h-3.5 w-3.5 text-primary" />
+            <Zap className="h-3.5 w-3.5" />
             Your daily dose of tech
           </motion.div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black leading-[1.1] mb-6 text-foreground">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="text-4xl sm:text-5xl md:text-6xl font-black leading-[1.1] mb-6 text-foreground"
+          >
             Where Technology
             <br />
             <span className="text-gradient">Meets Insight</span>
-          </h1>
+          </motion.h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-xl mb-8 leading-relaxed">
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.45, duration: 0.5 }}
+            className="text-lg md:text-xl text-muted-foreground max-w-xl mb-8 leading-relaxed"
+          >
             AI breakthroughs, cybersecurity deep dives, product reviews, and programming tutorials — all in one place.
-          </p>
+          </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.6, duration: 0.4 }}
             className="flex flex-wrap gap-3"
           >
             <a
@@ -51,7 +89,7 @@ const HeroSection = () => {
             </a>
             <Link
               to="/categories"
-              className="hover-scale inline-flex items-center gap-2 rounded-lg border border-border bg-secondary px-6 py-3 text-sm font-semibold text-foreground hover:bg-muted transition-all"
+              className="hover-scale inline-flex items-center gap-2 rounded-lg border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground hover:border-primary/30 hover:bg-primary/5 transition-all"
             >
               Browse Categories
             </Link>
